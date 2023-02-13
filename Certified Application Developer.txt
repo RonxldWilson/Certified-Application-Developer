@@ -1,2 +1,151 @@
 Certified Appication Developer
 
+SNOW is table Triggered JavaScript
+
+Scripting Overview
+
+1. What is platform Scripting?
+Platform Scripting allows complex configuartion and behaviours via JS
+
+However, when making changes to your instance use the Condition Builder wherever possible to 
+configure starightforward conditions and actions
+
+SNOW whenever goes to read a table it reads the other supporting tables like UI policies and other tables and when
+it encounters these tables and the JS script written in it, then it runs the JS scripts
+
+2. Why to not script in SNOW?
+    a. SNOW is continually evolving and the earlier scripts may not be necessary
+    b. Easier to debug and fix configuration changes thatn customization
+    c. Make sure the script is really needed
+        1. How business critical is this script
+        2. Will an ACL perform what is needed instead?
+        3. Can you acheive at least 805 of requirements via configuration changes instead of scripting
+    d. consider ways of customizing without scripting
+
+3. When should you script?
+    a. Add new functionality
+    b. Extend existing functionality
+    c. Guide users through messaging
+    d. Automate processes
+    e. Interact with third party applications
+
+4. Customization best practices
+
+SNOW is always trying to make the upgrade process easier. Adopting this process help wiht future upgrades to your instance 
+
+If a No code/Low code approach cannot be determined then Modify the baseline records and Review and revert the skipped record adter an Upgrade
+
+5. Where do scripts execute?
+    a. Client Side (Browser):
+        -   Auto-populate a field based on value of another field 
+        -   show hidden form sections
+
+    #   Client Scripts
+        UI Policies
+        Catalog Scripting
+
+    b. Server Side
+        -   Modify a database record
+        -   Trigger a flow
+
+    #   Business Rules
+        GlideSystem
+        GlideRecord
+        Script Includes
+        Flow Designer
+    
+    c. On a Mid Server
+        -   Integrate to a third party application
+
+6. Who can Script?
+    a. System Admininstrator
+        Manages all the features, applications and data in the platform 
+    b. System Definition Admininstrator
+        Manage a specific systme Definition 
+        Ex: Can only manage Business Rules
+    c. Application Admininstrator
+
+7. How to script in SNOW?
+    Using Script editor available in the SNP 
+
+8. Syntax editor Macros
+    These provides shourtcuts for commonly used code
+    Insert a macro by typing the macro Name and pressing <TAB>
+    Macro name is replaced with full macro text
+
+RESULT: of help <TAB>
+
+The Syntax Editor macros are:
+-----------------------------
+testNewFunctions - Use this Macro to test the functions from the ValidatorNew script include
+doc - Documentation Header 
+for - Standard loop for arrays
+vargror - Example GlideRecord Or Query
+info - 
+method - Standard JavaScript Class Method
+vargr - A common pattern of creating and querying a GlideRecord
+
+####
+
+Locating your script Quickly
+
+Navigate directly to Table configuartion
+
+Ex: incident.config will display all the configuartion changes made to that table
+
+### Application Scopes
+
+Every Application has a scope
+Determines which resources are availableto other application
+Once the scope is assigned to an application, it cannot be changed!!!
+
+Application Scopes protects an application and its artifcacts from damage to, or from other applications
+Must be configured to grant other applicationthe ablity to act on its record
+
+# Application Scope: Scope Namespace Identifier
+
+The system automatically prefixes a namespace identifier to scoped application artifcats (including scripts)
+Canneot be changed or removed to ensure they are always associated with the proper application
+
+    Scoped application artifcacts always begins wiht x_
+    Then the vendor prefix, SNC 
+    Then the application ID - Set when the application is first created
+    Script Name - unique script name
+
+    This example generates the namespace identifier: x_cld_travel_ExpensesReqBy
+
+
+# Application Scope: Updating Scripts in Another Scope
+
+Out of scope scripts are read-only
+
+# JS in SNOW
+
+Client Side Classes
+    GlideAjax#
+    GlideForm*
+    GlideList*
+    GlideRecord#
+    GlideUser 
+    GlideList
+    spModal - Used for Mobile user popups and stuff
+
+    * Mostly used for visual changes
+    # Also used in Server Side/ Data ceter side
+
+Server Side Classes
+    GlideAggregate
+    GlideDateTime
+    GlideElement
+    GlideRecord
+    GlideQuery
+    GlideSystem
+    JSON
+    Workflow
+
+JS in SNOW - API Documentation 
+Available at: https://developer.servicenow.com/dev.do#!/home
+
+Click on References and APIs: 
+    Server Scoped
+    Server Global
