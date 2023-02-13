@@ -149,3 +149,30 @@ Available at: https://developer.servicenow.com/dev.do#!/home
 Click on References and APIs: 
     Server Scoped
     Server Global
+
+
+############ Mod 2 ###############
+Client Script Overview: What is a Client Script?
+Client Script manage the behaviour of forms, fields and lists in real time.
+    -   Make fields Mandatory
+    -   Set one field in response to another
+    -   Modify choice list options
+    -   Hide/show form sections
+    -   Hide/fields
+    -   Display an alert
+    -   Manage/prohibit list ending
+
+Client script executes on client side - Browser may present the info in a different way
+
+Client scripts are not secured, since the info is already loaded in the browser, therefore it should not be used for 
+critical access controlling. Use ACLs for those
+
+#Client Scripts are a record in the Client script table
+Client scripts table will only run when the conditions are triggered
+
+Diffrent types on Client Scripts
+1. onLoad() - will run when the form is loaded and the control is given to the user
+2. onChange()
+3. 
+4. onSubmit()
+
