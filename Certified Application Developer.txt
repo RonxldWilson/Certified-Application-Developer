@@ -171,8 +171,150 @@ critical access controlling. Use ACLs for those
 Client scripts table will only run when the conditions are triggered
 
 Diffrent types on Client Scripts
-1. onLoad() - will run when the form is loaded and the control is given to the user
-2. onChange()
-3. 
-4. onSubmit()
+1. onLoad() - will run when the form is loaded and before the control is given to the user
+    Typically used to mainpulate a form's appearance or content on the screen
+    No argumet present in the onLoad() client script function
+2. onSubmit() - Script runs when a form is saved, updated or submitted
+    Typically used for field validation
+    No argumet present in the onSubmit() client script function
+3. onChange() - Script runs when a particular field value changes
+    Typically used to
+        -   Respond to fild values of interest
+        -   Modify one field value in response to another
+
+    Need to define a field onChange script will run.
+    It has 5 arguments for it.
+
+    All field values changes when a form loads
+    The onChange() Template's if statement aborts script executiong if:
+        -   Field value change due to form load
+        -   The newValue has no value
+4. onCellEdit() - This is executed in list View and not the form View
+    Since in the list view it is possible to edit multiple cells at the same time
+    the function takes in the parameter as 'oldValues' instead of 'oldValue' like in onChange()
+
+    Using this we can modify multiple records at the same time
+
+##### Client Side APIs
+# Client-side APls: What Data Can You See in a Client Script?
+
+Use ServiceNow's predefined client-side classes and methods to
+    - Control how the platform looks and behaves in a web browser
+    - Enhance the end user experience
+    This class reviews the most popular Client-side APls
+    -   g_form (GlideForm)
+    -   g_User (GlideUser)
+    -   g_scratchpad (in conjunction with a Display Business Rule)
+
+Anytime there is a mention of 'g_' it signifies that it is happening in the clien side
+
+#Glide is the original name of SNOW - GlideSoft
+
+
+GlideForm API provides useful method to
+    -   Customize forms 
+    -   Manage form fields and their data
+
+commonly used g_form method examples:
+    - Draw attention to an area on the form: flash(), showFieldMsg()
+    - Get field information: getValue)
+    - Change a field value: setValue(), clearValue()
+    - Change a choice list: add0ption(), clearOptions()
+    - Get form information: getSections(), isNewRecord()
+    - Add/clear form messages: addFormMessage(), clearAllFormMessages()
+
+NOTE: 
+    -   g_form object methods refer to fields by their field name, not their label
+    Easy way to locate a field name
+        -   Right-click a field's label
+        -   The field name appears on the Context menu
+
+Use Developers portal to get more info on the g_form global object or other objects for in-depth Documentation
+
+# getValue method
+    g_form.getValue() is a very commonly used g_form method
+    Retrieves a field value from the form (not the database)
+    Pay close attention to the field's data type when using this method
+
+For Example: g_form.getValue for a string will return string but for a choice it will return an integer
+
+getValue on a Reference fields will return the Sys_Id
+
+## Glide user
+Glide user API provides useful methods to access info about the currently logged in user
+Access GlideUser Methods using the g_user global object
+
+Note: g_user is globally scopeed
+
+
+## Client Script Debugging
+    Many times, your scripts do not work as expected
+    You can debug them using the following strategies:
+        - ServiceNow built-in client-side debugging tools
+            Script debug messages
+            Response Time Indicator
+        - Javascript debugging tools
+            alert()
+            try/catch
+        - Browser tools (for example, JavaScript console, Web Console)
+        - Third-party tools
+
+You can use addInfoMessage() also to co do debugging as it can be a lot more convinient to do so
+
+Response time Indicator, it is available in the lower right corner, the clock shows the amount of time spent
+on processing on the client side, server side and the network
+
+For JS bsaed debugging you can use
+
+try{
+
+} catch(){
+
+}
+
+## Reference Objects
+Reference Object records exist on a table other than a form's currently loaded table
+Reference Object data is not loaded into forms
+Client-side scripts only have access to data on forms
+
+Now how do we get the data of that reference object??
+
+# Reference Objects: Scripting with Reference Objects
+- Forms only store a Reference Object's sys_id
+- Reference Object fields cannot be directly referenced from a Client Script
+- Retrieving Reference Object fields requires a trip to the server and back
+    - Server trips take time
+    - Make as few trips as possible!
+
+## Script Table is a related table to Client Script
+
+    Track changes to the record
+    Created automatically every time a script is saved, submitted or updated
+    Can compare versions to see differences
+    Can revert to a previous version of a script
+
+## Recap of Client Script
+    Core Concepts
+        Client Scripts execute in the browser
+        Ihe g_form object has access to a form's fields and data
+        The g_user object has access to information about the curently logged-in user
+        Design your scripts for Desktop, Mobile/Service Portal or All
+        Quickly undo changes by reverting to an older version of a script
+
+
+######## Module 3 ############
+## UI Policy
+
+What is a Ul Policy?
+Defines the behavior and visibility of fields on
+    - Mandatory
+    - Visible
+    - Read-only
+Condition must be true for it to execute on a form
+Executes after Client Scripts
+
+Example: After Ul Policy executes
+    'Number is read-only
+    'Configuration item' is mandatory
+    'Priority' is not visible
 
