@@ -354,3 +354,102 @@ Require scripting                   |X                   |
 3. UI Policies can be created for tables in the same scope
 4. Debug Ul Policies using addlnfoMessage() and addErorMessage()
 5. Different actions are available if the condition returns true or false
+
+## Catalog Client Scriptand Catalog UI Policies
+This manages teh behaviour of catlog items when presented to users
+
+#Everything on a service catlog form is a service catalog variable set and not a field in a table
+# Example use case
+    -   Suppose a certain variable of choice has been marked as true, then the corresponding field should be
+        auto-filled. This can be achieved thru using catalog client scripts
+
+# There is seperate table for: "Catalog Client Script"
+It is same as general client script, and works mostly in the same manner
+
+Similar to UI Policy we have Catalog UI Policy
+1. Manages the behavior of Catalog Items when presented to your users 
+2. Offers the use of theCondition builder to easily configure a condition vs.Scripting it
+3. Condition must be true for the policy to execute
+
+## Variable SETS   ## Important
+1. Catalog Client scripts and Catalog UI Policies can also apply to Variable set
+2. Executes every time the variable set is used
+
+otherwise you will have to create the same catlog UI policy for all the individual catlog item, that is too much work
+Just use it using Variable set and make a catalog UI policy on it or write a catlog client Scripts
+
+Both Catalog Item variables and Variable Set variables are available to Catalog Client Scripts and Catalog UI Policies
+Allows you to manage the behavior of any variable at the Catalog Item level
+
+# What Data Can You See in Catalog Client Scripts and Catalog UI Policies?
+    -   Local variables declared in a script
+    -   Predefined client-side Global variables, such as
+        - g_form (GlideForm)
+        - g_user (GlideUser)
+
+## Core Concepts of catalog Client Scripts & Catalog UI Policies
+    -Catalog Client Scripts and Catalog Ul Policies manage the behavior of Catalog ltems
+    -Execute in the browser
+    -Variables in a condition mUst be visible (even if it is hidden or read-only) on the form layout for the
+    condition to be tested
+    -Catalog Client Scripts and Catalog UI Policies can also be applied to Variable Sets
+    -Behavior of variables can be managed at the Variable Set level or the Catalog Item level
+
+
+############ Business Rule ##############
+
+# What is BR?
+    JavaScript that runs when
+    -   A table is queried
+    -   A record is displayed, inserted, updated or deleted (CRUD operations)
+    Can be used to change values in fields when certain conditions are met
+
+    Execute server-side
+    - Faster
+    - Does not monitor forms or lists
+
+# When BR runs?
+- Watches the database for record access and responds to select access types 
+- Trigger specifies when to run (execute)
+- Not all Business Rules require scripting
+
+# Different types of BR
+1. Before Query Rules 
+2. Display
+3. Before Rules 
+4. After Rules
+5. Async Rules
+
+# What BR Executes?
+
+    ACTION                  BR Execution        ACTION              BR Execution    ACTION
+User or System Query -> Before Query Rules  -> Database Query -> Display Rule -> Form Submit
+                        (QVR)//aka Query rule 
+    BR Execution    ACTION              BR Execution    BR Execution
+-> Before Rules -> Database Update  -> After Rules -> Async Rules 
+
+
+    ACTION                  |   BR Execution
+1. User or System query     |   Before Query Rule / Query Rule aka QVR
+2. Database Query           |   Display Rules //When it is rendering but before you get the control
+3. Form Submit              |   Before Rules
+4. Database Update          |   After Rules 
+5.                          |   Async Rules
+
+## Types of BR
+1. Before Query BR/ Query Rule: 
+    Executes before a query is sent to the database
+    -This can be used to reduce what the user is able to see, since we will have access to the entire server
+    Example: Prevent users from one location seeing CIs from another
+
+2. Display Rules: No control is given to the user 
+
+    -    Execute after the data is read from the database and before the form is presented to the user
+    -   Primary purpose is to populate the g_scratchpad global object
+    -   Example: Provide Client Scripts with access to data from other records
+
+
+
+# Server-side Global Variables 
+
+# Server-side debugging
