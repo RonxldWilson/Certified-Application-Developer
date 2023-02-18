@@ -318,3 +318,39 @@ Example: After Ul Policy executes
     'Configuration item' is mandatory
     'Priority' is not visible
 
+UI Policy execution:
+1. Trigger specifies when to execute
+2. UI Policy Actions and/or Scripts specify what to execute
+3. Every field in the record can be evaluated even if it is not visible on the form 
+4. UI Policies do not have a Name field
+    Use the Short description field as a pseudo name
+5. Not all UI Policies require scripting
+
+#UI Policy Trigger When to Apply
+1. UI Policies execute based on evaluation of the Conditions
+    - Build conditions with the Condition Builder rather than scripting for better performance
+    - If left blank, the UI Policy logic always executes
+
+Application need:                   |   Client Script    | UI Policy
+Execute on form load                |X                   |X
+Execute on form save/submit/update  |X                   |                   
+Execute on form field value change  |X                   |X
+Have access to a field's prior value|X                   |
+Execute on list field value change  |X                   |
+Execute after Client Scripts        |                    |X
+Require scripting                   |X                   |
+
+
+# Good Practice
+1. Use as few UI Policies as possible to avoid long page load times
+2. Use the short descriptionfield to name the UI policy 
+3. Add the description field ot form to thorughly document the UI Policy
+4. Set onLoad to false if you do not need to execute on page load 
+5. Apply conditions using the condition builder, whenever possible
+
+# Core Concepts of UI policy
+1. UI Policies are used for client-side form management
+2. UI Policies take actions based on scripts and/or UI Policy Actions
+3. UI Policies can be created for tables in the same scope
+4. Debug Ul Policies using addlnfoMessage() and addErorMessage()
+5. Different actions are available if the condition returns true or false
