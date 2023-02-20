@@ -507,6 +507,55 @@ Everything in SNOW is a record in a table
 #########################################
 Every SNOW record is a JS Object or GlideRecord object
 
+## Dot-Walking
+Allows direct access to fields for related records (reference objects) by traversing tables
+    EXAMPLE:
+    <object>.<reference object name>,<field of interest>
+    current.caller_id.department.name Example
 
+
+To assist in Dot Walking there is something called as Script tree which helps in finding the existence of the 
+value in a related table
+
+Dot Walking works only with ServerSide scripting and doesn't work with Client Side Scripting
 
 # Server-side debugging
+
+    Server Side Debugging tools
+        GlideSystem logging methods
+        Debug Business Rules module
+        Script Debugger
+        Script Tracer
+        Console Debugger
+    
+    JS debugger
+    Try/Catch/Finally 
+
+################################################
+gs - stands for GlideSystem     i.e., Server-side
+
+################################
+Sends debugging information to the system log
+
+gs.info() - Used for informational events, such as messages that describe the progress of the application.
+gs.log() - This always logs a message when used in the global scope.
+gs.eror() - Used for critical errors that are encountered; the issue is logged.
+gs.warn() - Used for logging; ocCurs when there might be an issue.
+gs.debug() Logging occurs when in debug mode or when session debug for that application is enabled.
+
+
+Sends debugging info to the top of the form:
+
+gs.addlnfoMessage()
+gs.addErrorMessage(
+gs.methodName(<message>);
+gs.info("The record was opened: " +CUrent.opened_at);
+
+###########
+Important - USE SCRIPT DEBUGGER TO DO PROPER DEBUGGING 
+###########
+To debug your code properly use "Script Debugger" available in system diagnostics
+
+Used for debugging server-side JavaScript
+-Opens in a separate browser window along with Script Tracer and the Session Log
+###########
