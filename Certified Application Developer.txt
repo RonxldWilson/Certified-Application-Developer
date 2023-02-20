@@ -448,8 +448,65 @@ User or System Query -> Before Query Rules  -> Database Query -> Display Rule ->
     -   Primary purpose is to populate the g_scratchpad global object
     -   Example: Provide Client Scripts with access to data from other records
 
+3. Before Business Rules
+    Execute after form submission and before record is updated in the database
+    Example: Populate 'closed_by' with the name of the currently logged in user
+
+    It interupts the operation right before it happens
+
+4. After Business Rule:
+    Execute after form submission and record update in the database
+    Example: Cascade changes made to the approval field of a Service Catalog request to the requested items attached to that request
+
+5. Async Business Rule:
+    Execute after records are inserted/modified/queried
+    Run asynchronously as Scheduled Jobs
+    - Notify subscribers when Cls are affected by an Incident
+    - SLA calculations
+
+# What Business Rules Execute?
+    BR executes their corresponding Actions, you can set field values/show message/ supress the record OR set abort action
+    Dynamic Syntaxing is also possible in BR messages
+        Ex: Incident ${Number} opened successfuly
+    
+    Advanced Tab in BR
+    1. Codition Filter is available in the Advanced tab 
+    2. Script Segment: 
 
 
-# Server-side Global Variables 
+## Server-side Global Variables 
+
+# What data can you see in a BR?
+    -   Local Variable declared in a script
+    -   Predefined server-side Global Variables
+        -   current
+        -   previous
+        -   g_scratchpad
+                Display BR only
+                Works in conjunction with a client script
+
+    EXPLANATION: Now in client side to get the value of a particular field we need to use:
+        g_form.getValue('short_description) and then assign it to a variable but in 
+
+    Server-Side: There is no need to do all this just using:
+        - current.short_description will get the current value in the server-side
+        - similarlly previous.short_description will get what was previously stored on the server-side
+            
+            previous bascically gives what is the value currently scored in Server
+
+        Now g_scratchpad is just
+
+        if(current.state >= 5 && previous.state < 5) {
+            var reOpened = true;
+            g_scratchpad.createdBy = current.sys_created_by;
+            g_scratchpad.caller = current.caller_id;
+        }
+
+##########################################
+Everything in SNOW is a record in a table
+#########################################
+Every SNOW record is a JS Object or GlideRecord object
+
+
 
 # Server-side debugging
