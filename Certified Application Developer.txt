@@ -559,3 +559,33 @@ To debug your code properly use "Script Debugger" available in system diagnostic
 Used for debugging server-side JavaScript
 -Opens in a separate browser window along with Script Tracer and the Session Log
 ###########
+
+##################################
+    Script Debugger must be open    
+    Script must have a breakpoint set
+    Script must be executing in the same interactive session as the user with the breakpoints
+    Script debugging is session and user specific
+        - Only you are affected by your breakpoints 
+            If you have a breakpoint at a point in code, your co-workers will never see it
+        - Cannot step through scripts running asynchronously
+            Async Business Rules
+            Scheduled Jobs
+            Inbound email actions
+
+
+Script Debugger - Multiple Developer Support
+    Allows multiple developers to debug their own transactions without affecting each other
+
+Script Tracer(System diagnostics>Script Tracer): 
+
+####################### 
+Core Concepts of BR and Debugging
+####################
+    Business Rules execute when records are accessed:
+        When
+        Insert/Update/Query/Delete
+        Condition
+    Debug Business Rules with log messages written to files or to forms
+    Use Global Object Variables: previous, curent, g_Scratchpad
+    Dot-walking allows 'table hopping' between related tables
+
