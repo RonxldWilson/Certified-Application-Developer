@@ -862,3 +862,13 @@ new GlideQuery ( " sys_user ")
     GlideRecord queries can be created for any table
     The query() method executes a select statement againsta database table
     Use a while loop to iterate over returned GlideRecords 
+
+######## IMPORTANT #####################
+
+Suppose there is an error in specific line of code of the GlideRecord code written, it will skip that line 
+and move on to the next ones, therefore very Important to be clear with how it is written
+
+###################################
+SCRIPT INCLUDE
+###################################
+
