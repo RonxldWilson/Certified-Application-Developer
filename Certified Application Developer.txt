@@ -589,3 +589,276 @@ Core Concepts of BR and Debugging
     Use Global Object Variables: previous, curent, g_Scratchpad
     Dot-walking allows 'table hopping' between related tables
 
+
+###############################
+SNOW Glide Script
+###############################
+
+Glide System API can be used everywhere in the system where you use a server side script
+
+Wrte test and Debug BR
+
+# What is Glide system API
+    -   its a collection of Methods
+    -   Executes ate Server-side
+    -   Access System Level information
+        -   Logged in user
+        -   System 
+        -   Date and Time 
+
+# Example of User Method in Gldie Script
+    Return information about the currently logged in user
+    Examples
+    -getUser(), getUserName(), getUserID(), getUserDisplayName()
+    - hasRole(), hasRolelnGroup()
+
+    EXAMPLE in a Script:
+    if (gs.hasRole ( 'itil')) {
+        gs.addInfoMes sage ("getUser() returns : " gs.getUser ());
+        gs.addInfoMes sage ("getUserName () returns: " + gs.getUserName ()) 5
+        gs.addInfoMes sage ("getUserDisplayName () returns :" + gs.getUserDisplayName ()) ;|
+        gs.addInfoMes sage("getUser ID () returns: "+ gs.getUserID () );
+    }
+
+##############
+Glide Date and Time
+##############
+
+Date and Time Methods
+Work With Date and Time data
+    Examples
+        - beginningOf LastWeek(), endOfLastWeek()
+        - beginningOfNextMonth(), endOfNextMonth()
+        - dateDiff()
+        - now(), nowDateTime()
+        - minutesAgo(), quartersAgo(), monthsAgo(),yearsAgo()
+
+
+    Date and Time Method Examples
+        var firstDay = current.getDisplayValue ("u_hire_date");
+        var lastDay = current. getDisplayValue("u_last_date");
+        //If firstDay and lastDay both have values, then check to ensure that lastDay isn't before firstDay
+        if (firstDay && lastDay) {
+            if (gs.dateDiff(firstDay, lastDay, true) < e) {
+            gs.addErrorMessage ("The last day worked must be after the hire date. ");
+            current.u_last_date '';
+            current. setAbortAction (true);
+            }
+        }
+
+    //Example of seeing if the Hire date is more than the last date
+
+
+## GlideDate 
+## GlideDateTime
+
+    The GlideDate and GlideDateTime APls are used to manipulate date and time values
+    You can create a GlideDateTime object from a GlideDate object by passing in the GlideDate object 
+        as a parameter to the GlideDateTime constructor
+
+Example: 
+    var gDate = new GlideDate ();
+    gDate.setValue ( '2021-12-03 ');
+    gs.info(gDate);
+    var gDT = new GLideDate Time (gDate);
+    gs.info(gDT) ;
+
+
+
+## Scoped GlideSystem
+
+    -You must use Scoped APls when developing scripts for scoped applications
+    -The Scoped GlideSystem APl provides methods for accessing system-level information in scoped applications
+        - Logged in user
+        - General system
+        -Logging
+    - Error messages advise developers when methods are used in the wrong scope
+        -   Function Iog is not allowed in scope x travel. Use gs.debug() or gs.info() instead
+
+Scoped GlideSystem Logging Method
+    Write log messages in a private application scope
+    - debug()
+    - error()
+    - info()
+    - warn()
+    - isDebugging()
+
+
+### GxP for Glide System
+    -   Use the appropriate object methods based on your scope 
+        -   GlideSystem
+        -   Scoped GlideSystem
+    -Write validation scripts for forms with dates
+        -   Start date validation 
+        -   End date validation
+    - Use the GlideDateTime methods rather than JavaScript date methods for convenience
+    - Check the ServiceNow Developer's portal for the latest information on the GlideSystem and Scoped
+        GlideSystem APls and their methods
+
+## Core Concepts of GlideSystem
+    -   The GlideSystem and Scoped GlideSystem APls provide methods to access system-level information
+    -   GlideSystem methods fall into three categories:
+            User
+            General
+            Date/Time
+    -   Scoped GlideSystem methods fall into three categories:
+        -    User
+        -    General
+        -    Logging
+    Methods execute server-side
+
+
+################################
+GlideRecord API
+################################
+Use the GlideRecord API everywhere in the Platform where you use a ServerSide API
+
+# What is a GlideRecord?
+    -   Used for database operations instead of writing SQL queries
+    -   An object containing zero or more records from the same table (ordered list)
+    -   Contains records (rows) and fields (columns)
+    -   Executes server-side
+
+    Example: 
+    var incidents = new GlideRecord('incident');
+    incidents.addQuery( short_description', '', 'Cassette Player );
+    incidents.query();
+    while (incidents.next ()) {
+        incidents.description.setvalue("what is this, the 1970s?");
+        incidents.update();
+    }
+
+## How to Create a new GlideRecord Query
+1. Create a GlideRecord object for the table of interest
+2. Build the query conditions
+3. Execute the query
+4. Process returned records with script logic
+
+
+Step 1: Create a GlideRecord Object for the Table of Interest
+    var myObj = new GlideRecord ('table_name');
+    var myObj = new GlideRecord( 'change_request');
+
+Step 2: Build the Query Conditions
+    myObj.addQuery('category','=','Hardware');
+    myObj.addQuery('priority','!=',1);
+
+Syntax: addQuery(<field_name>, <operator>,<value>)
+
+NOTE: when adding diffrent queries to the same object it acts as an AND operator and not as OR operator of SQL
+
+Step 3: Execute the Query
+    myObj.query();
+
+Step 4: Process Returned Records with Script Logic
+
+    while(myObj.next()){
+        //Script Logic
+        // Reference current record as <object name> <property>
+    }
+    
+    // You can also use if logic to go throught the returend records
+
+    if(myObj.next()){       // if the proccess has only the first record returend
+        //Script Logic  
+    }
+    
+    if(myObj.hasNext()){    // Determines if more records exist and then helps in moving through them
+        //script logic
+    }
+
+NOTE: commonly while loop is used as compared if logic for working with processing of returned records
+
+Use the Update() method to save the changes to the records in the GlideRecord. If the record doesn't exist it is inserted.
+similarlly there is inseret, create and delete as well for the records which have been pulled by GlideRecord    
+
+###### FULL EXAMPLE #######
+var myObj = new GlideRecord(table_name');
+myObj.addQuery(fieldname''operator, value');
+myObj.addQuery(field_name',operator, value'");
+myObj.query():
+while(myObj.next()){
+    //Script logic
+    //Reference current record as <object name>.<property>
+    //Use myObj.update() to save changes made to records
+}
+######### OR Condition in script Syntax
+
+var myObj = new GlideRecord('change_request');
+var q1 = myObj.addQuery('categorty','=','Hardware');
+q1.addOrCondition('priority','!='1);
+
+#### Querying just one Record
+
+Sometimes instead of querying the entire database, just getting the single record is also possible
+
+    Example: 
+        var myObj = new GlideRecord('incident');
+        myObj.get(current.parent_incident);
+        myObj.u_rca = true; //Returns true if a record is found or False if a record is not found
+        myObj.update();
+
+#####################
+Adding Encoded Query
+#####################
+Systax: 
+    GlideRecordObject.addEncodedQuery('<query>');
+
+Go to the list view of the table, create the required filter, right click on breadcrumb and copy query then add it in
+encoded query.
+
+############# USECASE of GlideRecord  ###############
+Suppose we want to close all the incidents when a problem is supposed to be closed then we can use
+the GlideRecord to find all the related incidents attached to that problem and them close all of them in one go
+
+## Scoped GlideRecord - For scoped application development, use GlideRecord methods for database operations
+
+## GlideRecordSecure - 
+    Class inherited from GlideRecord
+    Performs the same functions as GlideRecord AND enforces ACLs
+
+############### GlideQuery API
+
+#What is it?
+    -   Server Side API for querying data
+    -   Written 100% JavaScript (global script include)
+    -   Uses GlideRecord behind the scenes
+# Why?
+GlideQuery is guided by three prinicples
+    -   Fail Fast
+        Improve the feedback loop
+        Make error as soon as possible
+    -   Be JavaScript
+        Behaves like normal JS
+        GlideRecord can be confusing with a mixture of java and Javascript elements
+    -   Be Expressive
+        Do more with less line of code
+        Coding style is fluent 
+
+
+### GlideQuery Example:
+new GlideQuery ( " sys_user ")
+    .where('department.name"', 'Sales ')
+    .where("roles', admin")
+    .limit (10)
+    . select ("user_name', 'phone', mobile_phone", email")
+    .forEach( function (u) {
+    gs.info(u.user_name +', '+u. phone+ ', '+u.mobile_phone','u.email);
+    });
+
+############# Performance Considerations
+# Which one is faster?
+# GlideRecord is faster than GlideQuery since there is no conversion involved
+
+############ GxP for GlideRecord/GlideQuery
+    -   Use the appropriate object methods based on your scope (GlideRecord, Scoped GlideRecord, GlideQuery)
+    -   Use GlideAggregate instead of getRowCount() for large tables and production instances
+    -   Perform all record queries in server-side scripts for improved performance
+    -   Practice writing the list of records to a log to ensure you do not accidentally insert/update/delete a record using GlideRecord
+    -   Use the NiceError function in GlideQuery to find, identify and fix errors
+
+###GlideRecord Core Concepts
+    GlideRecords are rows returned from the database
+    GlideRecord queries can be created for any table
+    The query() method executes a select statement againsta database table
+    Use a while loop to iterate over returned GlideRecords 
