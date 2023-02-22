@@ -872,3 +872,120 @@ and move on to the next ones, therefore very Important to be clear with how it i
 SCRIPT INCLUDE
 ###################################
 
+# What is a script include?
+    Stores reusable Javascript for execution on the server
+    Must be called to run
+    Can be client-callable
+
+BASIC CONCEPT: Write once use many times, can be either for Client and Server Callable not both at the same time
+The code of script include is always a server side
+
+Overview: Script Include Trigger
+    Not many configuration options as a Script Include runs only when called
+    Runs server-side
+    No default objects
+    Data (parameters) passed in from the calling script
+
+# Diffrent Types of Script Include?
+1. Store One Classless Function 
+    -Stores one re-usable function
+    -Used server-side only
+    -Can also be referred to as On Demand
+2. Define a new Class
+    -Collection of functions
+    -Can be called by client side scripts
+    -Standard to include "Utils" in the name (for example,TravelRequestUtils)
+3. Extend an Existing class
+    -Adds functionality to an existing Class
+    -Can be called from client-side scripts
+
+## Classless/On Demand Script Include
+    -   Stores one function
+    -   Script include name MUST BE Identical to the function name
+    -   Classless/on-Demand Script Includes are not callable from the client-side, even if the Client callable is selected
+
+## Defining a New Class
+    -   Stores multiple functions
+    -   After the record is named, a Script Editor Macro is inserted in the Script field to help guide you
+    -   Script Include name MUST be an EXACT match to the Class name
+
+# Reference Qualifiers : It is a way to target certain functions in a script include, kind of like applying a fancy filter
+
+
+
+
+############################################
+Communicating between Client Side and Server Side Using Script Include
+############################################################
+#One is by using GlideAjax
+
+#JavaScript Object Notation (JSON)
+    Data exchange format
+    Low overhead alternative to XML
+    Serializes and passes data between server and client
+
+#### State Model: Many of the SNOW table use Script Include to define there State model
+for Ex: Incident States are defined in IncidentStateSNC which is a script include which contains the states of the Incident
+
+
+## Server Lookup Best Practices: Minimize Server Lookups
+    You have reviewed many ways to get information from the server in class
+    The recommended methods are
+        -g_Scratchpad
+            Sent once when the form loads
+        - GlideAjax
+            Dynamically triggered when the client requests information from the server
+
+# Application Scope for Script Include
+
+When building a Script Include there is an option called as Accessible from: 
+    All application Scope   (Public)
+    This Application Scope only     (Private)
+
+#Protection Policy of Script Include:
+    Only applies when applications are installed from the ServiceNow App Store or from the application repository
+    Sets the level of protection for the application file
+
+    Protected - Protection policies safeguard intellectual property by making the file Read-only or Protected(Logic not visible)
+
+## Calling Script Include from a diffrent scope will require you to call the API of the Scope
+
+## GxP for Script Include
+    -   Prepend the Script Include name with the unique scope namespace when calling Script Includes from different scopes.
+    -   Use GlideAjax when you need to call from a client-side Script
+    -   Use Character delimited strings or JSON objects when passing multiple pieces of data from the server back to the client
+    -   Include a debug flag within select script includes on your instance to enable/disable debugging.
+
+
+## Core Concepts of Script Include
+    -   Script Includes contain reusable code
+    -   Script Includes execute only when called
+    -   Classless Script Includes are callable only from server-side scripts
+    -   Use GlideAjax when passing data between the client and server
+    -   JSON objects pass data as arrays or objects
+    -   Privately scoped Script Includes can only be called by other scripts in the same scope
+
+#################### Module 9 #########################
+Flow Designer Scripting
+
+Flow Designer Objects
+
+# When to use Flow Designer?
+    Use Flow Designer to develop new flows or when there is a need for a major redesign to an 
+    existing Workflow developed in the Workflow Editor.
+# When to use Workflow Editor?
+    Use the Workflow Editor to manage existing Workflows that are still functioning as expected.
+
+## Overview: What is Flow Designer?
+    Design environment that creates Flows
+    Flows consist of a trigger and at least one action
+    Triggers start a flow
+    Actions automate processes or record operations
+    Subflows are a sequence of reusable actions
+
+## Navigatation> Process Automation> Flow Designer 
+
+## Overview: Actions 
+    -   A group of reusable operations that automate the Now Platform features without having to write code.
+    -   Process Analysts can use Actions, Flow Logic or Subflows.
+
