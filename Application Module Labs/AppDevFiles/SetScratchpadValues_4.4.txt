@@ -1,0 +1,6 @@
+(function executeRule(current, previous /*null when async*/) {
+
+			g_scratchpad.city = current.requested_for.city;
+			g_scratchpad.country = current.requested_for.country;
+	
+})(current, previous);

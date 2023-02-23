@@ -1,0 +1,9 @@
+// Set the short description to reflect the item and location
+current.short_description = 'Reservation: ' + current.item_type.getDisplayValue() + ' from ' + current.depot.getDisplayValue();
+current.location_to_be_used = producer.location_to_be_used;
+if (producer.location_to_be_used == "Other") {
+   current.location_to_be_used = producer.other;
+}
+
+// Set the initial state to requested
+current.state = 13;

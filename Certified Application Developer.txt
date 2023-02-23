@@ -989,3 +989,198 @@ Flow Designer Objects
     -   A group of reusable operations that automate the Now Platform features without having to write code.
     -   Process Analysts can use Actions, Flow Logic or Subflows.
 
+# Inline Script
+    Enables users with coding experience to write inline scripts that set and modify input values during
+    the configuration of an action or flow.
+
+#Complex Data
+    Provides an easy to understand, configurable and graphical organization of complex structured data
+    Allows structured data to be encoded and stored in a machine-readable format,such as JSON or XML
+
+# FlowAPI
+    - Available outside of Flow Designer (Scripis- Background, Business Rules)
+    - Available inside Flow Designer (execute Flow B in Flow A via JavaScript)
+
+# FlowScriptAPI
+    -   Available only inside Flow Designer
+
+##### Script Triggered Subflows
+Subflows are a sequence of reusable actions that can be started from a Flow, Subflow or Script
+
+#Script-Triggered Subflow: Making a Subflow Run
+    -   Server Scripts (Business Rules, UI Actions and Script Includes) and Client Scripts can call a 
+        published subflow with code
+    
+    -   Subflows can be executed in the foreground or in the background (synchronous or asynchronous) 
+    -   The Client-side JavaScript library (GlideFlow) uses promise objects that provide an eventual result of
+        an asynchronous operation
+    -   There is a Code Snippet Generator!
+
+## Action Designer Script Step: Custom Actions
+    -   Use Custom Actions when there is a need for functionality that the ServiceNow provided Actions do not provide
+    -   Design a Custom Action for reusability
+    -   Within the Steps Panel, the Action Outline contains the parts of an Action
+
+#   Action Designer Script Step: Inputs and Outputs
+    -   Inputs and Outputs are data variables used in your action.
+    -   Inputs store the information passed to the action in the Data Panel and can be used in the Action Step.
+    -   Outputs return data back to the flow to be used by the flow or other actions.
+
+###Should I use a Subflow or an Action?
+Requires:                   SubflowW    Action
+One or two steps/actions    X           X
+Multiple steps/actions      X
+Flow logic                  X
+Custom scripts                          X
+
+
+# Core Concepts of Flow Designer
+    -   Flow Designer has reached parity with Workflow and should be used for all new development and major redesigns
+    -   The natural language and low-code approach to flow creation makes it easy for many roles
+    -   Actions and subflows provide reusable business logic across multiple flows
+    -   Action and subflows easy discovery helps with the flow creation process
+    -   Evaluate the core actions before scripting a custom action
+
+
+
+#########################################################################
+#########################################################################
+APPLICATION DEVELOPEMENT FUNDAMENTALS
+#########################################################################
+#########################################################################
+
+Module 1: Application Development Overview
+#Mod 1.1 Application Development Concepts
+
+## Types of Application
+1. ServiceNow Applications
+2. Partner Application 
+3. Custom Application 
+
+#Why To develop a custom Application 
+    -   To replace outdated, inadequate, custom business applications and processes
+    -   To extend service delivery and management to all enterprise departments
+    -   To extend the value of ServiceNow
+    -   To bring greater levels of automation and consolidation to enterprise services and their management
+
+##Should I Build It?
+#####Good Fit
+    -   Data can be modeled in a relational database
+    -   Extensive use of forms to interact with data
+    -   Requires reporting capability
+    -   Need workflow/flow to manage processes
+    -   Can extend existing functionality through JavaScript
+
+###Bad Fit
+    -   Data is unstructured, such as audio or video
+    -   Requires access to proprietary libraries that do not have an API
+    -   Multi-player games or applications requiring graphics engines
+    -   No process flow through application
+
+#Mod 1.2 Scoped Application Model
+
+## Philosphy of Scoped Apps 
+    -   Apps should be able to be unistalled
+    -   Apps should only access what they need
+    -   Apps should NOT break the entire system
+    -   Apps should NOT break other Apps
+    -   Apps should have clearly defined dependencies 
+    -   Apps should be self contained
+
+NOTE: In scoped application all of the artifcats have a seperate namespace with the application 
+    Scoped application supports Delegated Development
+    There is a facility for Source control Integration  
+    Publish to App repository ability also present
+    Easy file management 
+
+## Scope and Namespace
+
+What is a namespace: 
+    #PREFIX(x_/u_):
+    Scoped application always starts with an x_ prefix or u_ prefix, u_ signifies user created global scope, x_ is scoped application 
+    #CUSTOMER PREFIX:
+    The instance customer prefix:
+    This is a 2-5 characters long. ServiceNow generates this prefix for each customer, the instance stores the prefix in the    
+    ###glide.appcreator.company.code system property###
+
+    #Applicaiton ID:
+    This string can be 40 char long, it is shorten to 18 or less depending on the availablity
+
+    Example: x_acme_book_rooms
+    x_ - means scoped application
+    acme - Company Code
+    book_rooms - the Application ID
+
+    Now once the namespace is defined all the artifcats like UI policies and Client Script will be linked to this 
+    particular scoped application via the namespaces.
+
+    Determine Scope
+    General Rule
+    -   Use scoped applications where possible to reduce complexity and maintain a controlled and 
+        distributed development process
+    -   Examples
+            A custom application
+            A new utility, integration, or service
+            Customizations to scoped applications should be done in scope
+        
+    -   Exceptions
+            Modifications to global applications
+            Required resources not available from scopes
+            Extensive reliance on global resources
+
+#Mod 1.3 Application Development VS Application Deployment
+
+## Development
+# Update Sets
+    -   Construction of the next unit of deployment
+    -   Individuals and teams often manage multiple work streams
+
+# Deployment
+    -   Update Sets
+    -   Application Repository
+        Application of completed units of development to production
+        Execution of a change management process
+
+## What is an Update Set?
+    -   Container for capturing customizations
+    -   Used to move customizations between instances
+    -   Essential for:
+            Customizing baseline applications
+            Customizing applications purchased from the store
+    -   Useful for:
+            Keeping track of why a change was made
+            Exporting work in progress ahead of a clone
+            Associating changes with SDLC artifacts
+            Stories, problems, bugs, enhancements, etc.
+            Deploying an application if the app repo is unavailable
+
+##What is the ServiceNow App Repository?
+    -   A place for a company to share applications ready for distribution between its instances
+            glide.appcreator.company.code value must be the same on all instances (maint only property)
+    -   Standardizes apps and app versions installed on instances
+    -   Easily install/uninstaill/Update apps
+            admin role required
+
+##Application Repository
+    Allows development teams to deploy completed applications to other instances as a whole
+
+## Full Stack Development
+    It's Very Simple.
+    What we are trying to implement is Continual Integration and Continuous Deployment (CI/CD)
+    
+    Suppose the dev team has finished building a new feature, they commit it to a new branch which then gets 
+    tested out in the Test instance and once it clears it is merged with the master branch which then Deploys it to production
+
+    #Core Concepts
+    -   ServiceNow provides a cloud-based platform for application creation
+    -   Request-fulfill applications are well suited to the Now platform
+    -   ServiceNow provides various tools to support processes for development and deployment. 
+            Use the tool that is right for you and stick with it.
+    -   Use the application built in class as the basis for applications for your business
+
+Module 2: Application Analysis and Design
+
+## The content of the Vidoe is same as that of the Book provided by SNOW
+##########################################################################
+WILL BE ENDING THE NOTES HERE
+#########################################################################

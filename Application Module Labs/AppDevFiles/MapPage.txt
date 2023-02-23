@@ -1,0 +1,28 @@
+var gr = new GlideRecord('x_cdltd_loaner_req_loaner_request');
+gr.addEncodedQuery("active=true^requested_for.cityISNOTEMPTY");
+gr.query();
+
+while(gr.next()){
+	
+	//  Add copied  REST Message Script BELOW this line
+	
+	
+	
+	//  Add copied REST Message script ABOVE this line
+	
+	
+	// Extract latitude and longitude values from REST Message response
+	var xmlDoc = new XMLDocument2();
+	xmlDoc.parseXML(responseBody);
+	var myLat= xmlDoc.getNodeText("//latitude");
+	var myLong= xmlDoc.getNodeText("//longitude");
+	
+	// Plot each Requested for's location on a google map
+	var item = map.addItem(gr);
+	item.latitude = String(myLat);
+	item.longitude = String(myLong);
+	item.dialog_title = gr.getDisplayValue();
+	item.icon = "https://maps.google.com/mapfiles/ms/micons/yellow.png";
+	item.icon_width = "32";
+	item.icon_height = "32";
+}
